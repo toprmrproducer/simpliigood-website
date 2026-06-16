@@ -267,9 +267,25 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.92;letter-spaci
 .footer{position:relative;background:var(--green);color:var(--cream);padding:0 0 34px;overflow:hidden}
 .footer::before{content:"";position:absolute;inset:0;background:radial-gradient(130% 80% at 50% -20%,rgba(49,178,120,.20),transparent 62%);pointer-events:none}
 .footer .wrap{position:relative;z-index:2}
-/* CTA / newsletter band */
-.footer-cta{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding:74px 0 54px;border-bottom:1px solid rgba(255,255,255,.14)}
-.footer-cta h2{font-family:var(--display);font-size:clamp(2rem,4.4vw,3.5rem);color:#fff;text-transform:uppercase;line-height:.96}
+/* CLOSING CTA band (premium close, product + final CTA) */
+.footer-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(32px,5vw,72px);align-items:center;
+  padding:clamp(60px,7vw,104px) 0 clamp(48px,5vw,72px);border-bottom:1px solid rgba(255,255,255,.14)}
+.footer-hero .eyebrow{color:var(--yellow);display:inline-flex;margin-bottom:22px}
+.footer-hero h2{font-family:var(--display);font-size:clamp(2.5rem,5.2vw,4.8rem);color:#fff;text-transform:uppercase;line-height:.88;letter-spacing:-.022em}
+.footer-hero h2 .y{color:var(--yellow)}
+.footer-hero .fh-sub{font-family:var(--cond);font-weight:500;text-transform:none;color:rgba(255,255,255,.82);
+  font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.5;max-width:42ch;margin:24px 0 32px}
+.footer-hero .fh-cta{display:flex;flex-wrap:wrap;gap:14px}
+.footer-hero .fh-media{position:relative}
+.footer-hero .fh-media img{width:100%;border-radius:var(--r-xl);box-shadow:var(--el-4);aspect-ratio:5/4;-o-object-fit:cover;object-fit:cover;display:block}
+.footer-hero .fh-media::after{content:"";position:absolute;inset:0;border-radius:var(--r-xl);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);pointer-events:none}
+.footer-hero .fh-badge{position:absolute;left:-12px;bottom:20px;background:var(--yellow);color:var(--green);
+  font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.78rem;
+  padding:.7em 1.2em;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.5)}
+@media(max-width:820px){.footer-hero{grid-template-columns:1fr;gap:30px}.footer-hero .fh-media{order:-1;max-width:480px}}
+/* CTA / newsletter band (now secondary) */
+.footer-cta{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;padding:48px 0 50px;border-bottom:1px solid rgba(255,255,255,.14)}
+.footer-cta h2{font-family:var(--display);font-size:clamp(1.5rem,3vw,2.3rem);color:#fff;text-transform:uppercase;line-height:.98}
 .footer-cta h2 .y{color:var(--yellow)}
 .footer-cta .cta-sub{font-family:var(--cond);font-weight:500;text-transform:none;color:rgba(255,255,255,.78);margin-top:14px;max-width:42ch;line-height:1.45}
 .news{display:flex;gap:8px;background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 7px 7px 22px;transition:border .25s ease,background .25s ease,box-shadow .25s ease}
@@ -980,6 +996,22 @@ p{text-wrap:pretty}
 <!-- ============ FOOTER ============ -->
 <footer class="footer" id="about">
   <div class="wrap">
+    <div class="footer-hero reveal">
+      <div class="fh-copy">
+        <span class="eyebrow">Real. Super. Food.</span>
+        <h2>Your daily dose<br/>of <span class="y">sunshine.</span></h2>
+        <p class="fh-sub">One little cube of fresh-frozen spirulina, dropped into whatever you are already making. Clean, potent greens with zero effort.</p>
+        <div class="fh-cta">
+          <a class="btn btn-yellow" href="https://shop.simpliigood.com" target="_blank" rel="noopener" data-cursor="Shop">Shop the cubes <span class="arr">&#8594;</span></a>
+          <a class="btn btn-outline-light" href="#use">See how it works</a>
+        </div>
+      </div>
+      <div class="fh-media">
+        <img src="images/seq/poster.jpg" alt="A SimpliiGood spirulina cube dropping into a blender of fresh fruit and greens"/>
+        <span class="fh-badge">10 cubes &middot; ships frozen</span>
+      </div>
+    </div>
+
     <div class="footer-cta reveal">
       <div>
         <h2>Sunshine in a cube,<br/><span class="y">straight to your inbox.</span></h2>
