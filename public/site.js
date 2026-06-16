@@ -46,3 +46,20 @@ if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches&&wi
     b.addEventListener('pointerleave',function(){gsap.to(b,{x:0,y:0,duration:0.6,ease:'elastic.out(1,0.45)'});});
   });
 }
+/* Reactive cursor ring: trails the pointer, grows + labels over cards/buttons/text (fine-pointer only) */
+(function(){
+  if(!window.matchMedia||!matchMedia('(hover:hover) and (pointer:fine)').matches||!window.gsap)return;
+  var ring=document.getElementById('cursor'); if(!ring)return;
+  var lbl=document.createElement('span'); lbl.className='clabel'; ring.appendChild(lbl);
+  var xTo=gsap.quickTo(ring,'x',{duration:.42,ease:'power3'}),yTo=gsap.quickTo(ring,'y',{duration:.42,ease:'power3'});
+  var on=false;
+  window.addEventListener('pointermove',function(e){xTo(e.clientX);yTo(e.clientY);if(!on){on=true;ring.classList.add('on');}},{passive:true});
+  document.addEventListener('mouseleave',function(){on=false;ring.classList.remove('on');});
+  document.querySelectorAll('.galg figure,.split-media,.phero-media').forEach(function(el){if(!el.getAttribute('data-cursor'))el.setAttribute('data-cursor','View');});
+  document.querySelectorAll('a[href*="shop"]').forEach(function(el){if(!el.getAttribute('data-cursor'))el.setAttribute('data-cursor','Shop');});
+  var sel='a,button,.btn,.card,.galg figure,.split-media,.phero-media,h1,h2,h3,.totop,.socials a,[data-cursor]';
+  document.querySelectorAll(sel).forEach(function(el){
+    el.addEventListener('pointerenter',function(){ring.classList.add('grow');lbl.textContent=el.getAttribute('data-cursor')||'';});
+    el.addEventListener('pointerleave',function(){ring.classList.remove('grow');lbl.textContent='';});
+  });
+})();

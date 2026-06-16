@@ -355,6 +355,18 @@ html.lenis,html.lenis body{height:auto}
 /* film grain (no blend-mode, composited only) */
 .grain{position:fixed;inset:0;z-index:280;pointer-events:none;opacity:.028;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 .cursor,.cursor-dot{display:none}
+/* reactive cursor ring: native cursor stays, this trails + grows over interactive things (fine-pointer only) */
+@media (hover:hover) and (pointer:fine){
+  .cursor{display:block;position:fixed;top:0;left:0;width:34px;height:34px;margin:-17px 0 0 -17px;
+    border:1.6px solid rgba(21,64,72,.5);border-radius:50%;pointer-events:none;z-index:9998;opacity:0;
+    box-shadow:0 0 0 1.5px rgba(255,255,255,.32);
+    transition:opacity .35s ease,width .3s cubic-bezier(.16,1,.3,1),height .3s cubic-bezier(.16,1,.3,1),margin .3s cubic-bezier(.16,1,.3,1),background .3s ease,border-color .3s ease;will-change:transform}
+  .cursor.on{opacity:.85}
+  .cursor.grow{width:92px;height:92px;margin:-46px 0 0 -46px;background:rgba(254,230,45,.22);border-color:var(--yellow);box-shadow:0 0 0 1px rgba(21,64,72,.22)}
+  .cursor .clabel{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--cond);font-weight:700;
+    text-transform:uppercase;letter-spacing:.1em;font-size:.62rem;color:var(--green);opacity:0;transition:opacity .2s ease}
+  .cursor.grow .clabel{opacity:1}
+}
 /* card interactivity (cards react to cursor) */
 .uc,.gal-grid figure,.store{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s ease,border-color .3s ease;transform-style:preserve-3d;will-change:transform}
 .tcard:hover,.cmp.bad:hover{box-shadow:0 34px 66px -28px rgba(21,64,72,.5)}
@@ -451,12 +463,22 @@ html.lenis,html.lenis body{height:auto}
 .js-on .scrolly-canvas{opacity:0;transition:opacity .6s ease}
 .js-on .scrolly-canvas.ready{opacity:1}
 .js-on .scrolly-poster.hide{opacity:0;transition:opacity .6s ease}
-.scrolly-cap{position:absolute;left:7vw;bottom:14vh;z-index:3;max-width:46vw;pointer-events:none}
-.scrolly-cap span{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.9;letter-spacing:-.01em;
-  font-size:clamp(2.4rem,6.5vw,6rem);color:var(--green);display:block;
+.scrolly-cap{position:absolute;left:7vw;bottom:12vh;z-index:3;max-width:min(52vw,620px);pointer-events:none}
+.scrolly-cap .cap-kick{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.22em;
+  font-size:clamp(.72rem,1.1vw,.92rem);color:var(--green);display:flex;align-items:center;gap:.7em;margin-bottom:14px}
+.scrolly-cap .cap-kick::before{content:"";width:34px;height:2px;background:currentColor;display:inline-block}
+.scrolly-cap .cap-h{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.015em;
+  font-size:clamp(2.4rem,6.2vw,5.6rem);color:var(--green);display:block;
   text-shadow:0 1px 0 rgba(254,230,45,.9),0 0 26px rgba(254,230,45,.85),0 0 10px rgba(254,230,45,.7)}
-.scrolly-cap.dark span{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.6),0 0 8px rgba(0,0,0,.45),0 1px 0 rgba(0,0,0,.3)}
+.scrolly-cap .cap-sub{font-family:var(--cond);font-weight:500;text-transform:none;line-height:1.45;
+  font-size:clamp(1rem,1.5vw,1.28rem);color:var(--green);max-width:34ch;margin-top:18px;
+  text-shadow:0 1px 14px rgba(254,230,45,.7)}
+.scrolly-cap.dark .cap-kick,.scrolly-cap.dark .cap-h,.scrolly-cap.dark .cap-sub{color:#fff}
+.scrolly-cap.dark .cap-h{text-shadow:0 2px 18px rgba(0,0,0,.6),0 0 8px rgba(0,0,0,.45),0 1px 0 rgba(0,0,0,.3)}
+.scrolly-cap.dark .cap-kick,.scrolly-cap.dark .cap-sub{text-shadow:0 1px 12px rgba(0,0,0,.55)}
+.scrolly-cap.dark .cap-sub{color:rgba(255,255,255,.92)}
 .js-on .scrolly-cap{opacity:0;transform:translateY(24px);will-change:opacity,transform}
+@media(max-width:768px){.scrolly-cap .cap-sub{display:none}.scrolly-cap .cap-kick{margin-bottom:10px}}
 .scrolly-load{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(21,64,72,.14);z-index:5}
 .scrolly-load-bar{height:100%;width:0;background:var(--green);transition:width .2s ease}
 .scrolly-load.done{opacity:0;transition:opacity .4s ease}
@@ -660,9 +682,26 @@ p{text-wrap:pretty}
   <div class="scrolly-sticky">
     <canvas id="seqCanvas" class="scrolly-canvas"></canvas>
     <img src="images/seq/poster.jpg" alt="A frozen SimpliiGood spirulina cube dropping into a blender full of fruit, berries and greens" class="scrolly-poster" id="seqPoster" decoding="async"/>
-    <div class="scrolly-cap" data-at="0.07"><span>Real<br/>sunshine.</span></div>
-    <div class="scrolly-cap dark" data-at="0.55"><span>Sunshine<br/>in a cube.</span></div>
-    <div class="scrolly-cap" data-at="0.94"><span>Drop it in.<br/>Blend it up.</span></div>
+    <div class="scrolly-cap" data-at="0.05">
+      <span class="cap-kick">Real. Super. Food.</span>
+      <span class="cap-h">Real<br/>sunshine.</span>
+      <p class="cap-sub">Spirulina, alive and whole. It grows on nothing but sunlight and water, the most nutrient dense food on earth.</p>
+    </div>
+    <div class="scrolly-cap dark" data-at="0.44">
+      <span class="cap-kick">Fresh-frozen, never dried</span>
+      <span class="cap-h">Sunshine<br/>in a cube.</span>
+      <p class="cap-sub">Frozen the moment it is harvested, so every cube stays alive and potent. Not a dead, dusty powder.</p>
+    </div>
+    <div class="scrolly-cap" data-at="0.70">
+      <span class="cap-kick">Flavor-free, ready to blend</span>
+      <span class="cap-h">No prep.<br/>No mess.</span>
+      <p class="cap-sub">It melts straight in. No swampy taste, no chalky scoops, nothing to clean up after.</p>
+    </div>
+    <div class="scrolly-cap" data-at="0.92">
+      <span class="cap-kick">Drop it. Done.</span>
+      <span class="cap-h">Drop it in.<br/>Blend it up.</span>
+      <p class="cap-sub">One cube into whatever you are already making. Your greens, handled in seconds.</p>
+    </div>
     <div class="scrolly-load" id="seqLoad"><div class="scrolly-load-bar" id="seqLoadBar"></div></div>
     <div class="scrolly-hint" id="seqHint" aria-hidden="true">Scroll<span></span></div>
   </div>
@@ -1183,6 +1222,26 @@ window.addEventListener('load',()=>setTimeout(()=>{
   });
 })();
 
+/* ---- Reactive cursor ring: trails the pointer, grows + labels over cards/buttons/text (fine-pointer only) ---- */
+(function(){
+  if(!window.matchMedia||!matchMedia('(hover:hover) and (pointer:fine)').matches||!window.gsap)return;
+  var ring=document.getElementById('cursor'); if(!ring)return;
+  var lbl=document.createElement('span'); lbl.className='clabel'; ring.appendChild(lbl);
+  var xTo=gsap.quickTo(ring,'x',{duration:.42,ease:'power3'}),yTo=gsap.quickTo(ring,'y',{duration:.42,ease:'power3'});
+  var on=false;
+  window.addEventListener('pointermove',function(e){xTo(e.clientX);yTo(e.clientY);if(!on){on=true;ring.classList.add('on');}},{passive:true});
+  document.addEventListener('mouseleave',function(){on=false;ring.classList.remove('on');});
+  /* labels for charm */
+  document.querySelectorAll('.gal-grid figure,.tt-media,.shop-media').forEach(function(el){if(!el.getAttribute('data-cursor'))el.setAttribute('data-cursor','View');});
+  document.querySelectorAll('a[href*="shop"]').forEach(function(el){if(!el.getAttribute('data-cursor'))el.setAttribute('data-cursor','Shop');});
+  document.querySelectorAll('.uc').forEach(function(el){if(!el.getAttribute('data-cursor'))el.setAttribute('data-cursor','Try it');});
+  var sel='a,button,.btn,.card,.uc,.gal-grid figure,.tcard,.cmp,.tt-media,.shop-media,h1,h2,h3,.totop,.socials a,[data-cursor]';
+  document.querySelectorAll(sel).forEach(function(el){
+    el.addEventListener('pointerenter',function(){ring.classList.add('grow');lbl.textContent=el.getAttribute('data-cursor')||'';});
+    el.addEventListener('pointerleave',function(){ring.classList.remove('grow');lbl.textContent='';});
+  });
+})();
+
 /* ---- Footer: extra reveal for the giant wordmark (rise) ---- */
 if(window.gsap&&window.ScrollTrigger){
   var wm=document.querySelector('.footer .wm');
@@ -1335,7 +1394,7 @@ if(window.gsap&&window.ScrollTrigger){
   function updateCaps(p){
     for(var i=0;i<caps.length;i++){
       var at=parseFloat(caps[i].getAttribute('data-at'));
-      var o=Math.max(0,1-Math.abs(p-at)/0.085);
+      var o=Math.max(0,1-Math.abs(p-at)/0.12);
       o=o*o*(3-2*o); /* smoothstep */
       caps[i].style.opacity=o;
       caps[i].style.transform='translateY('+((1-o)*24)+'px)';
