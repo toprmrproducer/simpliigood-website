@@ -1,4 +1,4 @@
-/* SimpliiGood shared site JS (sub-pages) — native scroll, no fake cursor */
+/* SimpliiGood shared site JS (sub-pages). Native scroll, no fake cursor. */
 document.documentElement.classList.add('js-on');
 (function(){
   var nav=document.getElementById('nav'),navLinks=document.getElementById('navLinks'),burger=document.getElementById('burger');
@@ -32,15 +32,17 @@ document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener
 document.querySelectorAll('form[data-confirm]').forEach(function(f){f.addEventListener('submit',function(e){e.preventDefault();if(!f.checkValidity()){f.reportValidity();return;}var m=f.querySelector('.formmsg');if(m)m.style.display='block';var b=f.querySelector('button[type=submit]');if(b)b.textContent=f.dataset.confirm||'Sent';f.querySelectorAll('input,select,textarea,button').forEach(function(x){x.disabled=true;});});});
 (function(){var nf=document.getElementById('newsForm');if(!nf)return;nf.addEventListener('submit',function(e){e.preventDefault();if(!nf.checkValidity()){nf.reportValidity();return;}var b=nf.querySelector('button');if(b)b.textContent="You're in";var i=nf.querySelector('input');if(i){i.value='';i.disabled=true;}});})();
 (function(){var t=document.getElementById('toTop');if(!t)return;t.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});})();
-/* CARD interactivity: cards tilt toward the cursor + lift (fine-pointer only) */
-if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches){
-  document.querySelectorAll('.card,.galg figure').forEach(function(el){
-    el.addEventListener('mousemove',function(e){var r=el.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;el.style.transform='perspective(800px) rotateY('+(px*7)+'deg) rotateX('+(-py*7)+'deg) translateY(-7px)';});
-    el.addEventListener('mouseleave',function(){el.style.transform='';});
+/* Premium pointer feel: magnetic buttons + subtle card tilt (fine-pointer only) */
+if(window.matchMedia&&matchMedia('(hover:hover) and (pointer:fine)').matches&&window.gsap){
+  document.querySelectorAll('.card,.galg figure').forEach(function(card){
+    gsap.set(card,{transformPerspective:900,transformStyle:'preserve-3d'});
+    var rxTo=gsap.quickTo(card,'rotationX',{duration:0.4,ease:'power3'}),ryTo=gsap.quickTo(card,'rotationY',{duration:0.4,ease:'power3'}),yTo=gsap.quickTo(card,'y',{duration:0.4,ease:'power3'});
+    card.addEventListener('pointermove',function(e){var r=card.getBoundingClientRect();var px=(e.clientX-r.left)/r.width-0.5,py=(e.clientY-r.top)/r.height-0.5;ryTo(px*6);rxTo(-py*6);yTo(-6);});
+    card.addEventListener('pointerleave',function(){gsap.to(card,{rotationX:0,rotationY:0,y:0,duration:0.6,ease:'power3'});});
   });
-  /* magnetic buttons */
-  document.querySelectorAll('.btn,.totop').forEach(function(b){
-    b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect(),mx=e.clientX-(r.left+r.width/2),my=e.clientY-(r.top+r.height/2);if(window.gsap)gsap.to(b,{x:mx*0.3,y:my*0.4,duration:0.4,ease:'power3'});else b.style.transform='translate('+(mx*0.3)+'px,'+(my*0.4)+'px)';});
-    b.addEventListener('mouseleave',function(){if(window.gsap)gsap.to(b,{x:0,y:0,duration:0.6,ease:'elastic.out(1,0.4)'});else b.style.transform='';});
+  document.querySelectorAll('.btn,.totop,.socials a').forEach(function(b){
+    var xTo=gsap.quickTo(b,'x',{duration:0.4,ease:'power3'}),yTo=gsap.quickTo(b,'y',{duration:0.4,ease:'power3'});
+    b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();xTo((e.clientX-(r.left+r.width/2))*0.2);yTo((e.clientY-(r.top+r.height/2))*0.22);});
+    b.addEventListener('pointerleave',function(){gsap.to(b,{x:0,y:0,duration:0.6,ease:'elastic.out(1,0.45)'});});
   });
 }
