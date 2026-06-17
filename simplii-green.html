@@ -1404,8 +1404,8 @@ if(window.gsap&&window.ScrollTrigger){
   function frame(p){
     var sunIn=clamp(p/0.14), sunOut=clamp((p-0.28)/0.16);
     gsap.set(sun,{autoAlpha:sunIn*(1-sunOut), scale:lerp(0.7,1.08,sunIn)*(1-sunOut*0.85)});
-    var cubeIn=clamp((p-0.30)/0.16), fall=clamp((p-0.58)/0.22), gone=clamp((p-0.80)/0.06), e=fall*fall;
-    gsap.set(cube,{autoAlpha:cubeIn*(1-gone), scale:lerp(0.3,1,cubeIn)*lerp(1,0.32,e), yPercent:lerp(-14,0,cubeIn)+e*155, rotation:e*210});
+    var cubeIn=clamp((p-0.30)/0.16), fall=clamp((p-0.58)/0.20), gone=clamp((p-0.74)/0.07), e=fall*fall;
+    gsap.set(cube,{autoAlpha:cubeIn*(1-gone), scale:lerp(0.3,1,cubeIn)*lerp(1,0.46,e), yPercent:lerp(-14,0,cubeIn)+e*64, rotation:e*200});
     var jarIn=clamp((p-0.52)/0.20);
     gsap.set(jar,{autoAlpha:jarIn, yPercent:lerp(34,8,jarIn)});
     var blend=clamp((p-0.80)/0.18);
