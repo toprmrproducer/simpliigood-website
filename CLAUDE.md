@@ -40,7 +40,7 @@ testimonials (cream) → B2B/food-service form (green) → store locator (yellow
   scaled, audio stripped, `+faststart`; `<video autoplay muted loop playsinline poster=…>`.
 - All photos optimized with Pillow to ≤1600px (webp q82 / png). Total deployed weight ~5MB.
 - Source originals (5MB+ mp4s, 3-4MB pngs) stay in repo root; only optimized `public/` copies ship.
-- If regenerating imagery: brand bible + Magnific MCP; keep packaging a single consistent scale.
+- If regenerating imagery: use **Google Nano Banana 2** via the funded GEMINI key (see 17 Jun PM update; Magnific MCP is out of credits). Pass `public/images/hero-pack.webp` as a reference so the pouch stays on-brand; keep packaging a single consistent scale.
 
 ## Conventions / gotchas
 - Reveal animations are **progressive enhancement**: content is visible by default; `.js-on .reveal`
@@ -81,7 +81,7 @@ Alon approved the direction and asked for scroll-scrubbing animations. Now a 4-p
 - CURSOR: reverted to the native cursor. Instead, CARDS react to the cursor (3D tilt + lift on hover) + magnetic buttons. Logic in public/site.js and index.html inline script (fine-pointer only).
 - NAV: dark-hero pages (texture.html, food-service.html) get class "nav nav-light" so the top/non-scrolled nav is readable (yellow brand + cream links). Defined in site.css.
 - PLAINNESS: texture/about/food-service enriched (per-page <style> blocks after the site.css link): colored accent cards, full-bleed image bands, numbered process steps, dark stat bands, full-bleed division cards, menu tiles. Built by 3 parallel sub-agents, one per page.
-- Atlas Cloud image API (key for Nano Banana 2) rejected every image format (Gemini *-image 400s, gpt-image router down). $0 spent. New AI imagery still pending; existing library is used throughout.
+- Atlas Cloud image API (key for Nano Banana 2) rejected every image format (Gemini *-image 400s, gpt-image router down). $0 spent. **RESOLVED 17 Jun PM** — the real cause was the wrong model id in gemini.env (`gemini-3.1-flash-live-preview`, a live model). The working image path is the funded GEMINI key with model `gemini-3-pro-image-preview` (see 17 Jun PM update).
 
 ## Update 15 Jun (late PM) — store locator + stats fix
 - Store locator (#stores on index.html): real interactive Leaflet map + searchable directory built from Alon's 264-store CSV. Data in `public/stores.js` (window.STORES + window.STORE_STATES, regenerate from the CSV with the python in the daily note). Map = CartoDB Positron tiles + circleMarkers per state (sized by count, click to filter). Panel = search box + state chips + directory with Google Maps "Get directions" links.
@@ -97,3 +97,15 @@ NEW: Apple-style canvas image-sequence scroll-scrub inserted right after the her
 - COMPONENT: CSS `.scrollyseq{height:440vh}` + `position:sticky` pin (NO ScrollTrigger pin — avoids Lenis conflict). JS player at bottom of index.html: preloads frames (mobile uses the 119-set), draws cover-fit to canvas on a `ScrollTrigger {scrub:0.5}` keyed to section progress, 3 scroll-synced captions (REAL SUNSHINE / SUNSHINE IN A CUBE / DROP IT IN. BLEND IT UP), load bar, scroll hint.
 - PROGRESSIVE ENHANCEMENT: `poster.jpg` <img> is visible by default; canvas fades in (`.ready`) once frame 0 decodes, then poster hides. prefers-reduced-motion keeps the static poster. Never blank.
 - PENDING (Alon's 2nd scroll animation): a glass filling with spirulina juice in the "SPIRULINA IS A SOLAR-POWERED NUTRIENT FACTORY" stats section. No frames for it yet — needs a pour clip/sequence.
+
+## Update 17 Jun 2026 (PM) — Nano Banana 2 imagery + fly-in system + footer v2 (client friend approved)
+**AI IMAGERY (working path, finally).** Google Nano Banana 2 / Pro via the funded GEMINI key — NOT Magnific (that MCP has Nano Banana 2 but is out of credits: 75 cr/image, ~12 left).
+- Model `gemini-3-pro-image-preview` (SOTA, best brand/text fidelity), `generateContent`, ~1300 img-tokens ≈ **$0.13/image** (under the $0.50 cap). Verify the key's image models with `GET .../v1beta/models?key=$GEMINI_API_KEY` (filter name~image).
+- Reusable generator: `/tmp/nb.py` (urllib; args: out ratio prompt [refs…]; body = responseModalities IMAGE + imageConfig{aspectRatio,imageSize:2K}, falls back to bare body on 400). `set -a; source ~/.claude/credentials/gemini.env; set +a` before running (vars need exporting). Pass `hero-pack.webp` as a reference for any pouch shot so the brand pack stays faithful.
+- 5 new immaculate shots added (Pillow-opt to webp ≤1600/q82): `footer-pack.webp` (4:5 pedestal pack — footer), `cube-macro.webp` (1:1 frozen cube), `smoothie-pour.webp` (4:5 green pour), `flatlay-fresh.webp` (3:2 flatlay), `breakfast-bowl.webp` (3:2 lifestyle). Gallery now shows 4 of them; old slots (pack-splash/wood-product/flatlay-tray/smoothie-bowl) swapped out.
+
+**FLY-IN ANIMATIONS (Alon's ask "why can't images fly in").** New `data-reveal="fly"` + `data-fly="left|right|up|down|zoom"` system in the index.html inline script: a per-element `ScrollTrigger.create` → `gsap.from(el,{x/y/rotation/scale,autoAlpha:0,immediateRender:false,once})`. Content is visible by default (no CSS hide), so JS-off / GSAP-fail still shows everything. Applied to: gallery figures (alternating dirs), the big section media (fresh/shop/sustain/b2b/tt), and the footer copy+media.
+- HERO entrance is now a CSS-only fly-in: `@keyframes heroFly{translateX(54px)→0 + fade}` on `.js-on .hero-visual`. The conflicting gsap `.hero-visual` yPercent parallax was REMOVED (a CSS transform animation + gsap transform on the same element fight and the `both` fill freezes the parallax). The inner pack img keeps its `data-speed` parallax (different element). Respects prefers-reduced-motion (existing media query).
+
+**FOOTER v2.** Closing band (`.footer-hero`) now leads with the immaculate `footer-pack.webp` (portrait 4:5, `max-height:564px`) + bigger headline (`clamp(2.9rem,6vw,6rem)`) + Shop CTA + "10 cubes · ships frozen" badge; newsletter band slimmed below; giant animated wordmark unchanged. Inspired by footer.design refs Alon shared (editorial, big type, strong product image).
+- Verified live (webkit Playwright): 0 console errors, 0 broken images, 15 fly elements, none stuck invisible, hero `heroFly` active. Deployed commit pending.

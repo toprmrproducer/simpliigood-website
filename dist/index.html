@@ -271,13 +271,13 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.92;letter-spaci
 .footer-hero{display:grid;grid-template-columns:1.12fr .88fr;gap:clamp(32px,5vw,72px);align-items:center;
   padding:clamp(60px,7vw,104px) 0 clamp(48px,5vw,72px);border-bottom:1px solid rgba(255,255,255,.14)}
 .footer-hero .eyebrow{color:var(--yellow);display:inline-flex;margin-bottom:22px}
-.footer-hero h2{font-family:var(--display);font-size:clamp(2.5rem,5.2vw,4.8rem);color:#fff;text-transform:uppercase;line-height:.88;letter-spacing:-.022em}
+.footer-hero h2{font-family:var(--display);font-size:clamp(2.9rem,6vw,6rem);color:#fff;text-transform:uppercase;line-height:.86;letter-spacing:-.024em}
 .footer-hero h2 .y{color:var(--yellow)}
 .footer-hero .fh-sub{font-family:var(--cond);font-weight:500;text-transform:none;color:rgba(255,255,255,.82);
   font-size:clamp(1.05rem,1.5vw,1.3rem);line-height:1.5;max-width:42ch;margin:24px 0 32px}
 .footer-hero .fh-cta{display:flex;flex-wrap:wrap;gap:14px}
 .footer-hero .fh-media{position:relative}
-.footer-hero .fh-media img{width:100%;border-radius:var(--r-xl);box-shadow:var(--el-4);aspect-ratio:5/4;-o-object-fit:cover;object-fit:cover;display:block}
+.footer-hero .fh-media img{width:100%;border-radius:var(--r-xl);box-shadow:var(--el-4);aspect-ratio:4/5;-o-object-fit:cover;object-fit:cover;display:block;max-height:564px}
 .footer-hero .fh-media::after{content:"";position:absolute;inset:0;border-radius:var(--r-xl);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14);pointer-events:none}
 .footer-hero .fh-badge{position:absolute;left:-12px;bottom:20px;background:var(--yellow);color:var(--green);
   font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.05em;font-size:.78rem;
@@ -398,13 +398,13 @@ html.lenis,html.lenis body{height:auto}
 .hero-bgword{position:absolute;left:0;right:0;bottom:2vh;text-align:center;font-family:var(--display);font-size:24vw;line-height:.8;color:rgba(21,64,72,.06);text-transform:uppercase;white-space:nowrap;z-index:1;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none;letter-spacing:-.02em}
 /* hero entrance (CSS-only, always ends visible) */
 @keyframes heroUp{from{opacity:0;transform:translateY(34px)}to{opacity:1;transform:none}}
-@keyframes heroFade{from{opacity:0}to{opacity:1}}
+@keyframes heroFly{from{opacity:0;transform:translateX(54px)}to{opacity:1;transform:translateX(0)}}
 .js-on .hero-copy>*{animation:heroUp .95s cubic-bezier(.16,1,.3,1) both}
 .js-on .hero-copy .hero-badges{animation-delay:.05s}
 .js-on .hero-copy h1{animation-delay:.18s}
 .js-on .hero-copy .lead{animation-delay:.34s}
 .js-on .hero-copy .hero-cta{animation-delay:.48s}
-.js-on .hero-visual{animation:heroFade 1.1s ease .25s both}
+.js-on .hero-visual{animation:heroFly 1.15s cubic-bezier(.16,1,.3,1) .2s both}
 @media(prefers-reduced-motion:reduce){.js-on .hero-copy>*,.js-on .hero-visual{animation:none}}
 /* ============ PINNED HORIZONTAL "DROP IT" ============ */
 .dropit-h{position:relative;background:var(--green);color:var(--cream);overflow:hidden}
@@ -632,6 +632,8 @@ p{text-wrap:pretty}
 .sec.green :focus-visible,.fresh :focus-visible,.dropit-h :focus-visible{outline-color:var(--yellow)}
 /* SAFE RISE reveal (gsap.from drives it; visible by default if JS fails) */
 .js-on [data-reveal="rise"]{will-change:transform,opacity}
+/* SAFE FLY reveal — directional entrance (visible by default; gsap.from drives it) */
+.js-on [data-reveal="fly"]{will-change:transform,opacity}
 /* FORM inputs lift off "disabled" look */
 .field input,.field select,.field textarea{background:rgba(255,255,255,.10);box-shadow:inset 0 1px 3px rgba(0,0,0,.12)}
 .field input:focus,.field select:focus,.field textarea:focus{background:rgba(255,255,255,.14);border-color:var(--yellow);box-shadow:0 0 0 3px rgba(254,230,45,.18)}
@@ -781,7 +783,7 @@ p{text-wrap:pretty}
         </ul>
       </div>
     </div>
-    <div class="fresh-media" data-reveal="rise">
+    <div class="fresh-media" data-reveal="fly" data-fly="left">
       <img src="images/pack-smoothie.webp" alt="SimpliiGood pack with a fresh smoothie" />
       <img src="images/shop-product.png" alt="SimpliiGood pack with a fresh green smoothie" />
     </div>
@@ -832,7 +834,7 @@ p{text-wrap:pretty}
 <!-- ============ SHOP ============ -->
 <section class="sec shop" id="shop">
   <div class="wrap shop-grid">
-    <div class="shop-media has-video" data-reveal="rise">
+    <div class="shop-media has-video" data-reveal="fly" data-fly="right">
       <video autoplay muted loop playsinline poster="images/product-spin-poster.jpg" aria-label="SimpliiGood Spirulina pack spinning">
         <source src="videos/product-spin.mp4" type="video/mp4" />
         <img src="images/shop-product.png" alt="SimpliiGood Spirulina pack" />
@@ -866,7 +868,7 @@ p{text-wrap:pretty}
         <span>less land &amp; water than traditional protein sources</span>
       </div>
     </div>
-    <div class="sustain-media" data-reveal="rise">
+    <div class="sustain-media" data-reveal="fly" data-fly="left">
       <img src="images/pack-splash.webp" alt="SimpliiGood spirulina, fresh and green" />
     </div>
   </div>
@@ -881,14 +883,14 @@ p{text-wrap:pretty}
       <p>From smoothie bowls to bagels, fresh-frozen spirulina, in real kitchens.</p>
     </div>
     <div class="gal-grid">
-      <figure class="reveal tall"><img src="images/model-yellow.webp" alt="SimpliiGood lifestyle" loading="lazy"/></figure>
-      <figure class="reveal wide"><img src="images/pack-splash.webp" alt="Spirulina recipes" loading="lazy"/></figure>
-      <figure class="reveal"><img src="images/wood-product.webp" alt="SimpliiGood pack" loading="lazy"/></figure>
-      <figure class="reveal"><img src="images/smoothie-glass.webp" alt="Green smoothie" loading="lazy"/></figure>
-      <figure class="reveal wide"><img src="images/flatlay-tray.webp" alt="Spirulina dishes" loading="lazy"/></figure>
-      <figure class="reveal tall"><img src="images/beach.webp" alt="On the go" loading="lazy"/></figure>
-      <figure class="reveal"><img src="images/smoothie-bowl.webp" alt="Spirulina ideas" loading="lazy"/></figure>
-      <figure class="reveal"><img src="images/kitchen.webp" alt="In the kitchen" loading="lazy"/></figure>
+      <figure class="tall" data-reveal="fly" data-fly="left"><img src="images/model-yellow.webp" alt="SimpliiGood lifestyle" loading="lazy"/></figure>
+      <figure class="wide" data-reveal="fly" data-fly="up"><img src="images/smoothie-pour.webp" alt="Pouring a fresh green spirulina smoothie" loading="lazy"/></figure>
+      <figure data-reveal="fly" data-fly="right"><img src="images/cube-macro.webp" alt="A single frozen spirulina cube, close up" loading="lazy"/></figure>
+      <figure data-reveal="fly" data-fly="left"><img src="images/smoothie-glass.webp" alt="Green smoothie" loading="lazy"/></figure>
+      <figure class="wide" data-reveal="fly" data-fly="up"><img src="images/flatlay-fresh.webp" alt="Spirulina cubes with fresh greens and fruit, flat lay" loading="lazy"/></figure>
+      <figure class="tall" data-reveal="fly" data-fly="right"><img src="images/beach.webp" alt="On the go" loading="lazy"/></figure>
+      <figure data-reveal="fly" data-fly="left"><img src="images/breakfast-bowl.webp" alt="Spirulina smoothie bowl breakfast" loading="lazy"/></figure>
+      <figure data-reveal="fly" data-fly="up"><img src="images/kitchen.webp" alt="In the kitchen" loading="lazy"/></figure>
     </div>
   </div>
 </section>
@@ -944,7 +946,7 @@ p{text-wrap:pretty}
         <p class="formmsg" id="formMsg">Thanks, we'll be in touch within one business day.</p>
       </form>
     </div>
-    <div class="b2b-media" data-reveal="rise">
+    <div class="b2b-media" data-reveal="fly" data-fly="right">
       <img src="images/b2b.webp" alt="SimpliiGood for retail and food service" />
     </div>
   </div>
@@ -986,7 +988,7 @@ p{text-wrap:pretty}
         <a class="btn btn-outline-light" href="texture.html#contact">Investor &amp; sample requests</a>
       </div>
     </div>
-    <div class="tt-media" data-reveal="rise">
+    <div class="tt-media" data-reveal="fly" data-fly="right">
       <img src="images/texture-slices.webp" alt="Simplii Texture spirulina-based smoked salmon alternative" />
       <span class="tt-tag">Spirulina smoked salmon</span>
     </div>
@@ -996,8 +998,8 @@ p{text-wrap:pretty}
 <!-- ============ FOOTER ============ -->
 <footer class="footer" id="about">
   <div class="wrap">
-    <div class="footer-hero reveal">
-      <div class="fh-copy">
+    <div class="footer-hero">
+      <div class="fh-copy" data-reveal="fly" data-fly="left">
         <span class="eyebrow">Real. Super. Food.</span>
         <h2>Your daily dose<br/>of <span class="y">sunshine.</span></h2>
         <p class="fh-sub">One little cube of fresh-frozen spirulina, dropped into whatever you are already making. Clean, potent greens with zero effort.</p>
@@ -1006,8 +1008,8 @@ p{text-wrap:pretty}
           <a class="btn btn-outline-light" href="#use">See how it works</a>
         </div>
       </div>
-      <div class="fh-media">
-        <img src="images/seq/poster.jpg" alt="A SimpliiGood spirulina cube dropping into a blender of fresh fruit and greens"/>
+      <div class="fh-media" data-reveal="fly" data-fly="right">
+        <img src="images/footer-pack.webp" alt="The SimpliiGood Spirulina pouch on a green pedestal with fresh-frozen cubes and berries"/>
         <span class="fh-badge">10 cubes &middot; ships frozen</span>
       </div>
     </div>
@@ -1137,6 +1139,16 @@ if(window.gsap&&window.ScrollTrigger){
   ScrollTrigger.batch('[data-reveal="rise"]',{start:'top 86%',once:true,onEnter:function(b){
     gsap.from(b,{y:42,scale:.965,autoAlpha:0,duration:.95,ease:EASE,stagger:.09,immediateRender:false,overwrite:true});
   }});
+  /* ---- FLY reveals: directional entrance, content visible by default (immediateRender:false) ---- */
+  gsap.utils.toArray('[data-reveal="fly"]').forEach(function(el){
+    var dir=el.getAttribute('data-fly')||'up',v={autoAlpha:0,duration:1.1,ease:EASE,immediateRender:false,overwrite:'auto'};
+    if(dir==='left'){v.x=-100;v.rotation=-2.5;}
+    else if(dir==='right'){v.x=100;v.rotation=2.5;}
+    else if(dir==='down'){v.y=-80;}
+    else if(dir==='zoom'){v.scale=.82;}
+    else{v.y=90;}
+    ScrollTrigger.create({trigger:el,start:'top 88%',once:true,onEnter:function(){gsap.from(el,v);}});
+  });
   /* ---- counters: animate only values >= 10 so nothing fake-counts to 0/1 ---- */
   gsap.utils.toArray('.count').forEach(function(el){
     var to=+el.dataset.to;
@@ -1149,7 +1161,7 @@ if(window.gsap&&window.ScrollTrigger){
   });
 
   /* ---- HERO parallax (entrance is CSS-only, always visible) ---- */
-  gsap.to('.hero-visual',{yPercent:-14,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  /* hero-visual entrance is CSS-only (heroFly) so gsap never fights its transform; the inner pack img keeps its data-speed parallax */
   gsap.to('.hero-copy',{yPercent:-7,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
   gsap.to('.hero-bgword',{xPercent:-14,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
   gsap.to('.hero-aura',{yPercent:30,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
