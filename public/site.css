@@ -151,7 +151,7 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.92;letter-spaci
 .totop:hover{transform:translateY(-3px);box-shadow:0 12px 24px -12px rgba(254,230,45,.7)}
 .totop svg{width:13px;height:13px;transition:transform .25s ease}.totop:hover svg{transform:translateY(-3px)}
 .footer-wm-wrap{position:relative;min-height:clamp(60px,13vw,150px);margin-top:30px;overflow:hidden}
-.footer-wm-wrap .wm{font-family:var(--display);font-size:clamp(3rem,15.5vw,12rem);line-height:.8;letter-spacing:-.03em;text-transform:uppercase;pointer-events:none;user-select:none;position:absolute;left:0;right:0;bottom:-14px;text-align:center;white-space:nowrap;background:linear-gradient(100deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.05) 42%,rgba(254,230,45,.6) 50%,rgba(49,178,120,.45) 56%,rgba(255,255,255,.05) 64%,rgba(255,255,255,.05) 100%);background-size:280% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:wmShine 7s linear infinite}
+.footer-wm-wrap .wm{font-family:var(--display);font-size:clamp(3rem,15.5vw,12rem);line-height:.8;letter-spacing:-.03em;text-transform:uppercase;pointer-events:none;user-select:none;position:absolute;left:0;right:0;bottom:-14px;text-align:center;white-space:nowrap;color:rgba(255,255,255,.05)}
 @keyframes wmShine{0%{background-position:115% 0}100%{background-position:-115% 0}}
 .footer-credit{position:relative;z-index:5;text-align:center;font-family:var(--cond);font-weight:600;text-transform:uppercase;letter-spacing:.16em;font-size:.66rem;color:rgba(255,255,255,.4);padding-top:22px}
 .footer-credit a{color:var(--yellow)}.footer-credit a:hover{opacity:.7}

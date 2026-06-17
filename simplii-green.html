@@ -324,9 +324,7 @@ h1,h2,h3{font-family:var(--display);font-weight:900;line-height:.92;letter-spaci
 .totop:hover svg{transform:translateY(-3px)}
 /* giant animated wordmark */
 .footer-wm-wrap{position:relative;min-height:clamp(60px,13vw,150px);margin-top:30px;overflow:hidden}
-.footer-wm-wrap .wm{font-family:var(--display);font-size:clamp(3rem,15.5vw,12rem);line-height:.8;letter-spacing:-.03em;text-transform:uppercase;pointer-events:none;user-select:none;position:absolute;left:0;right:0;bottom:-14px;text-align:center;white-space:nowrap;
-  background:linear-gradient(100deg,rgba(255,255,255,.05) 0%,rgba(255,255,255,.05) 42%,rgba(254,230,45,.6) 50%,rgba(49,178,120,.45) 56%,rgba(255,255,255,.05) 64%,rgba(255,255,255,.05) 100%);
-  background-size:280% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;animation:wmShine 7s linear infinite}
+.footer-wm-wrap .wm{font-family:var(--display);font-size:clamp(3rem,15.5vw,12rem);line-height:.8;letter-spacing:-.03em;text-transform:uppercase;pointer-events:none;user-select:none;position:absolute;left:0;right:0;bottom:-14px;text-align:center;white-space:nowrap;color:rgba(255,255,255,.05)}
 @keyframes wmShine{0%{background-position:115% 0}100%{background-position:-115% 0}}
 @media(prefers-reduced-motion:reduce){.footer-wm-wrap .wm{animation:none}}
 
@@ -465,33 +463,44 @@ html.lenis,html.lenis body{height:auto}
   .hero-stamp{width:104px;height:104px;font-size:.66rem;left:-8px}
 }
 
-/* ============ BLEND SCROLL-SCRUB (Alon's footage: cube drop -> blend -> pour) ============ */
-.scrollyseq{position:relative;height:340vh;background:#F5DB48}
-.scrolly-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#F5DB48}
-.scrolly-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.scrolly-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
-.js-on .scrolly-canvas{opacity:0;transition:opacity .5s ease}
-.js-on .scrolly-canvas.ready{opacity:1}
-.js-on .scrolly-poster.hide{opacity:0;transition:opacity .5s ease}
-.scrolly-cap{position:absolute;left:7vw;bottom:11vh;z-index:3;max-width:min(46vw,560px);pointer-events:none}
+/* ============ SCROLL SEQUENCE: sun -> cube (green) -> blend video (yellow) ============ */
+.scrollyseq{position:relative;height:420vh;background:#0f2e34}
+.scrolly-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0f2e34}
+/* Part A: sun + real cube lead-in, drawn on the green bg */
+.anim-lead{position:absolute;inset:0;z-index:2;pointer-events:none}
+.anim-lead .a-particles{position:absolute;inset:0;z-index:0}
+.anim-lead .a-dot{position:absolute;border-radius:50%;will-change:transform}
+.anim-lead .a-sun{position:absolute;inset:0;margin:auto;width:min(44vh,400px);height:min(44vh,400px);border-radius:50%;
+  background:radial-gradient(circle at 42% 36%,#fff7bf 0%,#FEE62D 46%,#f2c200 82%);
+  box-shadow:0 0 150px 44px rgba(254,230,45,.5),0 0 64px 14px rgba(254,230,45,.8);will-change:transform,opacity}
+.anim-lead .a-cube{position:absolute;inset:0;margin:auto;width:min(46vh,440px);height:auto;z-index:2;
+  filter:drop-shadow(0 34px 64px rgba(0,0,0,.6));will-change:transform,opacity}
+@media(min-width:769px){.anim-lead{left:30%}}
+/* Part B: blend video frames */
+.scrolly-canvas{position:absolute;inset:0;width:100%;height:100%;display:block;z-index:1}
+.scrolly-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:0}
+.scrolly-cap{position:absolute;left:7vw;bottom:11vh;z-index:5;max-width:min(46vw,560px);pointer-events:none}
 .scrolly-cap .cap-kick{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.22em;
   font-size:clamp(.72rem,1.1vw,.92rem);color:var(--green);display:flex;align-items:center;gap:.7em;margin-bottom:14px}
 .scrolly-cap .cap-kick::before{content:"";width:34px;height:2px;background:currentColor;display:inline-block}
 .scrolly-cap .cap-h{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.015em;
-  font-size:clamp(2.4rem,6vw,5.4rem);color:var(--green);display:block;text-shadow:0 2px 16px rgba(245,219,72,.9),0 0 4px rgba(245,219,72,.8)}
+  font-size:clamp(2.4rem,6vw,5.4rem);color:var(--green);display:block;text-shadow:0 2px 16px rgba(254,230,45,.85)}
 .scrolly-cap .cap-sub{font-family:var(--cond);font-weight:600;text-transform:none;line-height:1.45;
-  font-size:clamp(1rem,1.4vw,1.24rem);color:var(--green);max-width:32ch;margin-top:16px;text-shadow:0 1px 10px rgba(245,219,72,.95)}
+  font-size:clamp(1rem,1.4vw,1.24rem);color:var(--green);max-width:32ch;margin-top:16px;text-shadow:0 1px 10px rgba(254,230,45,.9)}
+.scrolly-cap.dark .cap-kick,.scrolly-cap.dark .cap-h,.scrolly-cap.dark .cap-sub{color:#fff}
+.scrolly-cap.dark .cap-h{text-shadow:0 2px 20px rgba(0,0,0,.55),0 0 8px rgba(0,0,0,.4)}
+.scrolly-cap.dark .cap-kick,.scrolly-cap.dark .cap-sub{text-shadow:0 1px 14px rgba(0,0,0,.5)}
 .js-on .scrolly-cap{opacity:0;transform:translateY(24px);will-change:opacity,transform}
-.scrolly-load{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(21,64,72,.16);z-index:5}
-.scrolly-load-bar{height:100%;width:0;background:var(--green);transition:width .2s ease}
+.scrolly-load{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(255,255,255,.14);z-index:6}
+.scrolly-load-bar{height:100%;width:0;background:var(--yellow);transition:width .2s ease}
 .scrolly-load.done{opacity:0;transition:opacity .4s ease}
-.scrolly-hint{position:absolute;right:6vw;bottom:6vh;z-index:4;font-family:var(--cond);font-weight:700;text-transform:uppercase;
-  letter-spacing:.18em;font-size:.78rem;color:var(--green);opacity:.7;display:flex;flex-direction:column;align-items:center;gap:8px}
-.scrolly-hint span{display:block;width:1px;height:34px;background:var(--green);animation:scrollyHint 1.6s ease-in-out infinite}
+.scrolly-hint{position:absolute;right:6vw;bottom:6vh;z-index:6;font-family:var(--cond);font-weight:700;text-transform:uppercase;
+  letter-spacing:.18em;font-size:.78rem;color:#fff;opacity:.7;display:flex;flex-direction:column;align-items:center;gap:8px}
+.scrolly-hint span{display:block;width:1px;height:34px;background:#fff;animation:scrollyHint 1.6s ease-in-out infinite}
 .scrolly-hint.gone{opacity:0;transition:opacity .4s ease}
 @keyframes scrollyHint{0%,100%{transform:scaleY(.35);transform-origin:top;opacity:.4}50%{transform:scaleY(1);opacity:1}}
-@media(max-width:768px){.scrollyseq{height:280vh}.scrolly-cap .cap-sub{display:none}.scrolly-cap{left:6vw;bottom:9vh;max-width:80vw}.scrolly-cap .cap-kick{margin-bottom:8px}.scrolly-hint{display:none}}
-@media(prefers-reduced-motion:reduce){.scrollyseq{height:auto}.scrolly-sticky{position:relative;height:72vh}.js-on .scrolly-canvas{opacity:1}}
+@media(max-width:768px){.scrollyseq{height:340vh}.scrolly-cap .cap-sub{display:none}.scrolly-cap{left:6vw;bottom:9vh;max-width:80vw}.scrolly-cap .cap-kick{margin-bottom:8px}.scrolly-hint{display:none}.anim-lead{left:0}.anim-lead .a-cube{width:56vw}}
+@media(prefers-reduced-motion:reduce){.scrollyseq{height:auto}.scrolly-sticky{position:relative;height:72vh;background:#FEE62D}.anim-lead{display:none}}
 
 /* ===================================================================
    PREMIUM TOKENS + LAYER (max-mode upgrade)
@@ -683,19 +692,29 @@ p{text-wrap:pretty}
 <!-- ============ SCROLL-SCRUB SEQUENCE (sun -> cube -> blender) ============ -->
 <section class="scrollyseq" id="scrolly" aria-label="From a cube of sunshine to a blended smoothie">
   <div class="scrolly-sticky">
-    <canvas id="seqCanvas" class="scrolly-canvas"></canvas>
-    <img src="images/blend/bf_001.jpg" alt="A SimpliiGood spirulina cube dropping into a blender of fruit and greens, then pouring out as a green smoothie" class="scrolly-poster" id="seqPoster" decoding="async"/>
-    <div class="scrolly-cap" data-at="0.08">
-      <span class="cap-kick">Drop it in</span>
-      <span class="cap-h">Sunshine<br/>in a cube.</span>
-      <p class="cap-sub">One frozen cube of fresh spirulina, straight into whatever you are already blending.</p>
+    <div class="anim-lead" id="animLead" aria-hidden="true">
+      <div class="a-particles" id="aParticles"></div>
+      <div class="a-sun" id="aSun"></div>
+      <img class="a-cube" id="aCube" src="images/blend/cube.webp" alt=""/>
     </div>
-    <div class="scrolly-cap" data-at="0.46">
+    <canvas id="seqCanvas" class="scrolly-canvas"></canvas>
+    <img src="images/blend/bf_001.jpg" alt="A SimpliiGood spirulina cube dropping into a blender, blending and pouring out as a green smoothie" class="scrolly-poster" id="seqPoster" decoding="async"/>
+    <div class="scrolly-cap dark" data-at="0.06">
+      <span class="cap-kick">Real. Super. Food.</span>
+      <span class="cap-h">Real<br/>sunshine.</span>
+      <p class="cap-sub">Spirulina, alive and whole, grown on nothing but sunlight and water.</p>
+    </div>
+    <div class="scrolly-cap dark" data-at="0.24">
+      <span class="cap-kick">Fresh-frozen, never dried</span>
+      <span class="cap-h">Sunshine<br/>in a cube.</span>
+      <p class="cap-sub">Frozen the moment it is harvested, so every cube stays alive and potent.</p>
+    </div>
+    <div class="scrolly-cap" data-at="0.58">
       <span class="cap-kick">No prep, no mess</span>
       <span class="cap-h">Blend<br/>it up.</span>
-      <p class="cap-sub">It melts right in. No swampy taste, no chalky scoops, nothing to clean up after.</p>
+      <p class="cap-sub">It melts right in. No swampy taste, no chalky scoops, nothing to clean up.</p>
     </div>
-    <div class="scrolly-cap" data-at="0.85">
+    <div class="scrolly-cap" data-at="0.90">
       <span class="cap-kick">Real. Super. Food.</span>
       <span class="cap-h">Your greens,<br/>handled.</span>
       <p class="cap-sub">A potent hit of whole-food spirulina, poured and ready in seconds.</p>
@@ -1346,72 +1365,65 @@ if(window.gsap&&window.ScrollTrigger){
   var ctx=canvas.getContext('2d',{alpha:false});
   var poster=document.getElementById('seqPoster');
   var loadWrap=document.getElementById('seqLoad'),loadBar=document.getElementById('seqLoadBar');
-  var hint=document.getElementById('seqHint');
+  var hint=document.getElementById('seqHint'),sticky=section.querySelector('.scrolly-sticky');
+  var lead=document.getElementById('animLead'),sun=document.getElementById('aSun'),cube=document.getElementById('aCube');
+  var particles=document.getElementById('aParticles');
   var caps=[].slice.call(section.querySelectorAll('.scrolly-cap'));
-  var BG='#F5DB48';
+  var YBG='#FEE62D', GBG=[15,46,52], YRGB=[254,230,45], HAND=0.34;
+  if(poster)poster.style.opacity='0';
 
+  /* fruit particles (Part A) */
+  var COLORS=['#FEE62D','#EF467B','#2B6CB3','#7FC349','#DD4926'],dots=[];
+  for(var i=0;i<14;i++){
+    var d=document.createElement('span');d.className='a-dot';
+    var sz=6+Math.round(Math.random()*11);
+    d.style.width=d.style.height=sz+'px';d.style.background=COLORS[i%COLORS.length];
+    d.style.left=(7+Math.random()*86)+'%';d.style.top=(8+Math.random()*80)+'%';
+    d.style.opacity=(0.3+Math.random()*0.4).toFixed(2);
+    particles.appendChild(d);
+    dots.push({el:d,dx:(Math.random()*2-1),dy:(Math.random()*2-1),amp:16+Math.random()*40});
+  }
+
+  function clamp(x){return x<0?0:x>1?1:x;}
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function ss(t){t=clamp(t);return t*t*(3-2*t);}
+  function mixc(a,b,t){return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';}
+
+  /* ---- Part B frames ---- */
   var isMobile=window.matchMedia&&matchMedia('(max-width:768px)').matches;
-  var COUNT=121;
-  var base=isMobile?'images/blend/m/bf_':'images/blend/bf_';
+  var COUNT=121, fbase=isMobile?'images/blend/m/bf_':'images/blend/bf_';
   function pad(n){n=''+n;while(n.length<3){n='0'+n;}return n;}
-  function url(i){return base+pad(i)+'.jpg';}
-
-  var frames=new Array(COUNT),loaded=0,ready=false,cur={f:0};
+  var frames=new Array(COUNT),loaded=0,ready=false,curF=0;
   var dpr=Math.min(window.devicePixelRatio||1,2),cssW=0,cssH=0;
 
-  function sizeCanvas(){
-    var r=canvas.getBoundingClientRect();
-    cssW=r.width;cssH=r.height;
-    canvas.width=Math.round(cssW*dpr);canvas.height=Math.round(cssH*dpr);
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    render();
-  }
-  function drawContain(img){
-    if(!img||!img.complete||!img.naturalWidth){return false;}
-    ctx.fillStyle=BG;ctx.fillRect(0,0,cssW,cssH);
-    var s=Math.min(cssW/img.naturalWidth,cssH/img.naturalHeight);
-    var w=img.naturalWidth*s,h=img.naturalHeight*s;
-    ctx.drawImage(img,(cssW-w)/2,(cssH-h)/2,w,h);
-    return true;
-  }
-  function render(){
-    var idx=Math.max(0,Math.min(COUNT-1,Math.round(cur.f)));
-    if(drawContain(frames[idx]))return;
-    for(var d=1;d<COUNT;d++){ if(drawContain(frames[idx-d]))return; if(drawContain(frames[idx+d]))return; }
-  }
-  function reveal(){ if(ready)return;ready=true;sizeCanvas();canvas.classList.add('ready');if(poster)poster.classList.add('hide'); }
+  function sizeCanvas(){var r=canvas.getBoundingClientRect();cssW=r.width;cssH=r.height;canvas.width=Math.round(cssW*dpr);canvas.height=Math.round(cssH*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);drawFrame();}
+  function drawContain(img){if(!img||!img.complete||!img.naturalWidth){return false;}ctx.fillStyle=YBG;ctx.fillRect(0,0,cssW,cssH);var s=Math.min(cssW/img.naturalWidth,cssH/img.naturalHeight);var w=img.naturalWidth*s,h=img.naturalHeight*s;ctx.drawImage(img,(cssW-w)/2,(cssH-h)/2,w,h);return true;}
+  function drawFrame(){var idx=Math.max(0,Math.min(COUNT-1,Math.round(curF)));if(drawContain(frames[idx]))return;for(var d=1;d<COUNT;d++){if(drawContain(frames[idx-d]))return;if(drawContain(frames[idx+d]))return;}}
+  function loadFrame(i){var img=new Image();img.decoding='async';img.onload=img.onerror=function(){loaded++;if(loadBar)loadBar.style.width=Math.round(loaded/COUNT*100)+'%';if(i===0&&this.naturalWidth){ready=true;sizeCanvas();}if(loaded>=COUNT&&loadWrap)loadWrap.classList.add('done');};img.src=fbase+pad(i+1)+'.jpg';frames[i]=img;}
+  loadFrame(0);for(var qi=1;qi<COUNT;qi++)loadFrame(qi);
+  setTimeout(function(){if(!ready){for(var fi=0;fi<COUNT;fi++){if(frames[fi]&&frames[fi].complete&&frames[fi].naturalWidth){ready=true;sizeCanvas();break;}}}},1200);
 
-  function loadFrame(i){
-    var img=new Image();img.decoding='async';
-    img.onload=img.onerror=function(){
-      loaded++;
-      if(loadBar)loadBar.style.width=Math.round(loaded/COUNT*100)+'%';
-      if(i===0&&this.naturalWidth)reveal();
-      if(loaded>=COUNT&&loadWrap)loadWrap.classList.add('done');
-    };
-    img.src=url(i+1);frames[i]=img;
+  /* ---- scrub: Part A sun->cube (0..HAND), Part B video (HAND..1), bg green->yellow ---- */
+  function frame(p){
+    var bg=mixc(GBG,YRGB,ss((p-(HAND-0.08))/0.12));
+    section.style.background=bg; if(sticky)sticky.style.background=bg;
+    var leadOut=clamp((p-(HAND-0.02))/0.05);
+    lead.style.opacity=(1-leadOut);
+    var sunIn=clamp(p/0.07), sunOut=clamp((p-0.12)/0.08);
+    gsap.set(sun,{autoAlpha:sunIn*(1-sunOut), scale:lerp(0.6,1.1,sunIn)*(1-sunOut*0.82)});
+    var cubeIn=clamp((p-0.13)/0.10), shrink=clamp((p-0.27)/0.08);
+    gsap.set(cube,{autoAlpha:cubeIn, scale:lerp(0.3,1,cubeIn)*lerp(1,0.5,shrink), yPercent:shrink*26, rotation:lerp(-7,0,cubeIn)});
+    var vp=clamp((p-(HAND-0.04))/(1-(HAND-0.04)));
+    curF=vp*(COUNT-1); drawFrame();
+    canvas.style.opacity=ready?clamp((p-(HAND-0.04))/0.06):0;
+    for(var k=0;k<dots.length;k++){var o=dots[k];o.el.style.transform='translate('+(o.dx*o.amp*(0.3+p))+'px,'+(o.dy*o.amp-p*36)+'px)';}
   }
-  loadFrame(0);
-  for(var qi=1;qi<COUNT;qi++)loadFrame(qi);
-  setTimeout(function(){ if(!ready){for(var fi=0;fi<COUNT;fi++){if(frames[fi]&&frames[fi].complete&&frames[fi].naturalWidth){reveal();break;}}} },1200);
+  function updateCaps(p){for(var i=0;i<caps.length;i++){var at=parseFloat(caps[i].getAttribute('data-at'));var o=Math.max(0,1-Math.abs(p-at)/0.15);o=o*o*(3-2*o);caps[i].style.opacity=o;caps[i].style.transform='translateY('+((1-o)*24)+'px)';}}
 
-  function updateCaps(p){
-    for(var i=0;i<caps.length;i++){
-      var at=parseFloat(caps[i].getAttribute('data-at'));
-      var o=Math.max(0,1-Math.abs(p-at)/0.16);o=o*o*(3-2*o);
-      caps[i].style.opacity=o;caps[i].style.transform='translateY('+((1-o)*24)+'px)';
-    }
-  }
-
-  ScrollTrigger.create({
-    trigger:section,start:'top top',end:'bottom bottom',scrub:0.5,
-    onUpdate:function(self){
-      cur.f=self.progress*(COUNT-1);render();updateCaps(self.progress);
-      if(hint){ if(self.progress>0.02){hint.classList.add('gone');} else {hint.classList.remove('gone');} }
-    }
-  });
+  ScrollTrigger.create({trigger:section,start:'top top',end:'bottom bottom',scrub:0.5,
+    onUpdate:function(self){frame(self.progress);updateCaps(self.progress);if(hint){if(self.progress>0.02){hint.classList.add('gone');}else{hint.classList.remove('gone');}}}});
   window.addEventListener('resize',function(){dpr=Math.min(window.devicePixelRatio||1,2);sizeCanvas();},{passive:true});
-  sizeCanvas();
+  sizeCanvas();frame(0);updateCaps(0);
   window.addEventListener('load',function(){sizeCanvas();ScrollTrigger.refresh();});
   setTimeout(function(){ScrollTrigger.refresh();},400);
 })();
