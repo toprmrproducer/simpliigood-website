@@ -18,10 +18,12 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      // SimpliiGood multi-page site. Home is the Simplii Green experience;
-      // texture/about/food-service share public/site.css + public/site.js.
+      // SimpliiGood multi-page site. Home (index) is the brand division-chooser;
+      // simplii-green is the consumer/retail experience; texture/about/food-service
+      // share public/site.css + public/site.js.
       input: {
         main: resolve(__dirname, 'index.html'),
+        green: resolve(__dirname, 'simplii-green.html'),
         texture: resolve(__dirname, 'texture.html'),
         about: resolve(__dirname, 'about.html'),
         foodservice: resolve(__dirname, 'food-service.html'),
