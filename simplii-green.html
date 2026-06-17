@@ -465,41 +465,24 @@ html.lenis,html.lenis body{height:auto}
   .hero-stamp{width:104px;height:104px;font-size:.66rem;left:-8px}
 }
 
-/* ============ IMAGE-BASED CUBE-DROP ANIMATION (sun -> cube -> blender) ============ */
-.scrollyseq{position:relative;height:340vh;background:#0f2e34}
-.scrolly-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#0f2e34}
-.anim-stage{position:absolute;inset:0;z-index:1;pointer-events:none}
-.anim-el{position:absolute;inset:0;margin:auto;will-change:transform,opacity}
-.a-sun{width:min(48vh,430px);height:min(48vh,430px);border-radius:50%;
-  background:radial-gradient(circle at 42% 36%,#fff7bf 0%,#FEE62D 46%,#f2c200 82%);
-  box-shadow:0 0 150px 44px rgba(254,230,45,.5),0 0 64px 14px rgba(254,230,45,.8)}
-.a-cube{width:min(33vh,290px);height:auto;filter:drop-shadow(0 26px 44px rgba(0,0,0,.5))}
-.a-jarwrap{width:min(48vh,440px);height:min(72vh,660px)}
-.a-jar{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 30px 54px rgba(0,0,0,.55))}
-.a-smoothie{position:absolute;left:18%;right:18%;bottom:12%;height:60%;z-index:2;border-radius:9% 9% 7% 7%;
-  background:linear-gradient(180deg,#54bd72 0%,#2f8f4e 58%,#1c6537 100%);
-  box-shadow:inset 0 7px 0 rgba(255,255,255,.16);opacity:0;transform:scaleY(0);transform-origin:bottom center}
-.a-particles{position:absolute;inset:0;z-index:0}
-.a-dot{position:absolute;border-radius:50%;will-change:transform}
-@media(min-width:769px){.anim-stage{left:34%}}
-.a-sun{z-index:1}.a-jarwrap{z-index:2}.a-cube{z-index:3}
-.scrolly-cap{position:absolute;left:7vw;bottom:12vh;z-index:3;max-width:min(52vw,620px);pointer-events:none}
+/* ============ BLEND SCROLL-SCRUB (Alon's footage: cube drop -> blend -> pour) ============ */
+.scrollyseq{position:relative;height:340vh;background:#F5DB48}
+.scrolly-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#F5DB48}
+.scrolly-canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scrolly-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.js-on .scrolly-canvas{opacity:0;transition:opacity .5s ease}
+.js-on .scrolly-canvas.ready{opacity:1}
+.js-on .scrolly-poster.hide{opacity:0;transition:opacity .5s ease}
+.scrolly-cap{position:absolute;left:7vw;bottom:11vh;z-index:3;max-width:min(46vw,560px);pointer-events:none}
 .scrolly-cap .cap-kick{font-family:var(--cond);font-weight:700;text-transform:uppercase;letter-spacing:.22em;
   font-size:clamp(.72rem,1.1vw,.92rem);color:var(--green);display:flex;align-items:center;gap:.7em;margin-bottom:14px}
 .scrolly-cap .cap-kick::before{content:"";width:34px;height:2px;background:currentColor;display:inline-block}
 .scrolly-cap .cap-h{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.88;letter-spacing:-.015em;
-  font-size:clamp(2.4rem,6.2vw,5.6rem);color:var(--green);display:block;
-  text-shadow:0 1px 0 rgba(254,230,45,.9),0 0 26px rgba(254,230,45,.85),0 0 10px rgba(254,230,45,.7)}
-.scrolly-cap .cap-sub{font-family:var(--cond);font-weight:500;text-transform:none;line-height:1.45;
-  font-size:clamp(1rem,1.5vw,1.28rem);color:var(--green);max-width:34ch;margin-top:18px;
-  text-shadow:0 1px 14px rgba(254,230,45,.7)}
-.scrolly-cap.dark .cap-kick,.scrolly-cap.dark .cap-h,.scrolly-cap.dark .cap-sub{color:#fff}
-.scrolly-cap.dark .cap-h{text-shadow:0 2px 18px rgba(0,0,0,.6),0 0 8px rgba(0,0,0,.45),0 1px 0 rgba(0,0,0,.3)}
-.scrolly-cap.dark .cap-kick,.scrolly-cap.dark .cap-sub{text-shadow:0 1px 12px rgba(0,0,0,.55)}
-.scrolly-cap.dark .cap-sub{color:rgba(255,255,255,.92)}
+  font-size:clamp(2.4rem,6vw,5.4rem);color:var(--green);display:block;text-shadow:0 2px 16px rgba(245,219,72,.9),0 0 4px rgba(245,219,72,.8)}
+.scrolly-cap .cap-sub{font-family:var(--cond);font-weight:600;text-transform:none;line-height:1.45;
+  font-size:clamp(1rem,1.4vw,1.24rem);color:var(--green);max-width:32ch;margin-top:16px;text-shadow:0 1px 10px rgba(245,219,72,.95)}
 .js-on .scrolly-cap{opacity:0;transform:translateY(24px);will-change:opacity,transform}
-@media(max-width:768px){.scrolly-cap .cap-sub{display:none}.scrolly-cap .cap-kick{margin-bottom:10px}}
-.scrolly-load{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(21,64,72,.14);z-index:5}
+.scrolly-load{position:absolute;left:0;bottom:0;height:3px;width:100%;background:rgba(21,64,72,.16);z-index:5}
 .scrolly-load-bar{height:100%;width:0;background:var(--green);transition:width .2s ease}
 .scrolly-load.done{opacity:0;transition:opacity .4s ease}
 .scrolly-hint{position:absolute;right:6vw;bottom:6vh;z-index:4;font-family:var(--cond);font-weight:700;text-transform:uppercase;
@@ -507,8 +490,8 @@ html.lenis,html.lenis body{height:auto}
 .scrolly-hint span{display:block;width:1px;height:34px;background:var(--green);animation:scrollyHint 1.6s ease-in-out infinite}
 .scrolly-hint.gone{opacity:0;transition:opacity .4s ease}
 @keyframes scrollyHint{0%,100%{transform:scaleY(.35);transform-origin:top;opacity:.4}50%{transform:scaleY(1);opacity:1}}
-@media(max-width:768px){.scrollyseq{height:300vh}.scrolly-cap{left:6vw;bottom:12vh;max-width:80vw}.scrolly-hint{display:none}.a-cube{width:42vw}.a-jarwrap{height:54vh}}
-@media(prefers-reduced-motion:reduce){.scrollyseq{height:auto}.scrolly-sticky{position:relative;height:74vh}.anim-stage .a-sun,.anim-stage .a-cube{opacity:0}.anim-stage .a-jarwrap{opacity:1}.anim-stage .a-smoothie{opacity:1;transform:scaleY(1)}}
+@media(max-width:768px){.scrollyseq{height:280vh}.scrolly-cap .cap-sub{display:none}.scrolly-cap{left:6vw;bottom:9vh;max-width:80vw}.scrolly-cap .cap-kick{margin-bottom:8px}.scrolly-hint{display:none}}
+@media(prefers-reduced-motion:reduce){.scrollyseq{height:auto}.scrolly-sticky{position:relative;height:72vh}.js-on .scrolly-canvas{opacity:1}}
 
 /* ===================================================================
    PREMIUM TOKENS + LAYER (max-mode upgrade)
@@ -700,35 +683,24 @@ p{text-wrap:pretty}
 <!-- ============ SCROLL-SCRUB SEQUENCE (sun -> cube -> blender) ============ -->
 <section class="scrollyseq" id="scrolly" aria-label="From a cube of sunshine to a blended smoothie">
   <div class="scrolly-sticky">
-    <div class="anim-stage" id="animStage" aria-hidden="true">
-      <div class="a-particles" id="aParticles"></div>
-      <div class="a-sun anim-el" id="aSun"></div>
-      <img class="a-cube anim-el" id="aCube" src="images/anim/cube.webp" alt=""/>
-      <div class="a-jarwrap anim-el" id="aJar">
-        <img class="a-jar" id="aJarFruit" src="images/anim/jar.webp" alt=""/>
-        <img class="a-jar" id="aJarSmoothie" src="images/anim/jar-smoothie.webp" alt=""/>
-      </div>
-    </div>
-    <div class="scrolly-cap dark" data-at="0.08">
-      <span class="cap-kick">Real. Super. Food.</span>
-      <span class="cap-h">Real<br/>sunshine.</span>
-      <p class="cap-sub">Spirulina, alive and whole. It grows on nothing but sunlight and water, the most nutrient-dense food on earth.</p>
-    </div>
-    <div class="scrolly-cap dark" data-at="0.40">
-      <span class="cap-kick">Fresh-frozen, never dried</span>
+    <canvas id="seqCanvas" class="scrolly-canvas"></canvas>
+    <img src="images/blend/bf_001.jpg" alt="A SimpliiGood spirulina cube dropping into a blender of fruit and greens, then pouring out as a green smoothie" class="scrolly-poster" id="seqPoster" decoding="async"/>
+    <div class="scrolly-cap" data-at="0.08">
+      <span class="cap-kick">Drop it in</span>
       <span class="cap-h">Sunshine<br/>in a cube.</span>
-      <p class="cap-sub">Frozen the moment it is harvested, so every cube stays alive and potent. Not a dead, dusty powder.</p>
+      <p class="cap-sub">One frozen cube of fresh spirulina, straight into whatever you are already blending.</p>
     </div>
-    <div class="scrolly-cap dark" data-at="0.64">
-      <span class="cap-kick">Flavor-free, ready to blend</span>
-      <span class="cap-h">Cube<br/>drop.</span>
-      <p class="cap-sub">It melts straight in. No swampy taste, no chalky scoops, nothing to clean up after.</p>
-    </div>
-    <div class="scrolly-cap" data-at="0.93">
-      <span class="cap-kick">Drop it. Done.</span>
+    <div class="scrolly-cap" data-at="0.46">
+      <span class="cap-kick">No prep, no mess</span>
       <span class="cap-h">Blend<br/>it up.</span>
-      <p class="cap-sub">One cube into whatever you are already making. Your greens, handled in seconds.</p>
+      <p class="cap-sub">It melts right in. No swampy taste, no chalky scoops, nothing to clean up after.</p>
     </div>
+    <div class="scrolly-cap" data-at="0.85">
+      <span class="cap-kick">Real. Super. Food.</span>
+      <span class="cap-h">Your greens,<br/>handled.</span>
+      <p class="cap-sub">A potent hit of whole-food spirulina, poured and ready in seconds.</p>
+    </div>
+    <div class="scrolly-load" id="seqLoad"><div class="scrolly-load-bar" id="seqLoadBar"></div></div>
     <div class="scrolly-hint" id="seqHint" aria-hidden="true">Scroll<span></span></div>
   </div>
 </section>
@@ -1367,74 +1339,81 @@ if(window.gsap&&window.ScrollTrigger){
 <script>
 (function(){
   var section=document.getElementById('scrolly');
-  var stage=document.getElementById('animStage');
-  if(!section||!stage||!window.gsap||!window.ScrollTrigger){return;}
-  var sun=document.getElementById('aSun'),cube=document.getElementById('aCube'),
-      jar=document.getElementById('aJar'),jarFruit=document.getElementById('aJarFruit'),jarSmoothie=document.getElementById('aJarSmoothie'),
-      hint=document.getElementById('seqHint'),sticky=section.querySelector('.scrolly-sticky'),
-      particles=document.getElementById('aParticles');
+  var canvas=document.getElementById('seqCanvas');
+  if(!section||!canvas||!window.gsap||!window.ScrollTrigger){return;}
+  if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches){return;}
+
+  var ctx=canvas.getContext('2d',{alpha:false});
+  var poster=document.getElementById('seqPoster');
+  var loadWrap=document.getElementById('seqLoad'),loadBar=document.getElementById('seqLoadBar');
+  var hint=document.getElementById('seqHint');
   var caps=[].slice.call(section.querySelectorAll('.scrolly-cap'));
-  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var BG='#F5DB48';
 
-  /* floating fruit particles in brand colors */
-  var COLORS=['#FEE62D','#EF467B','#2B6CB3','#7FC349','#DD4926'],dots=[];
-  for(var i=0;i<16;i++){
-    var d=document.createElement('span');d.className='a-dot';
-    var sz=6+Math.round(Math.random()*12);
-    d.style.width=d.style.height=sz+'px';
-    d.style.background=COLORS[i%COLORS.length];
-    d.style.left=(7+Math.random()*86)+'%';
-    d.style.top=(8+Math.random()*80)+'%';
-    d.style.opacity=(0.35+Math.random()*0.45).toFixed(2);
-    particles.appendChild(d);
-    dots.push({el:d,dx:(Math.random()*2-1),dy:(Math.random()*2-1),amp:18+Math.random()*44});
+  var isMobile=window.matchMedia&&matchMedia('(max-width:768px)').matches;
+  var COUNT=121;
+  var base=isMobile?'images/blend/m/bf_':'images/blend/bf_';
+  function pad(n){n=''+n;while(n.length<3){n='0'+n;}return n;}
+  function url(i){return base+pad(i)+'.jpg';}
+
+  var frames=new Array(COUNT),loaded=0,ready=false,cur={f:0};
+  var dpr=Math.min(window.devicePixelRatio||1,2),cssW=0,cssH=0;
+
+  function sizeCanvas(){
+    var r=canvas.getBoundingClientRect();
+    cssW=r.width;cssH=r.height;
+    canvas.width=Math.round(cssW*dpr);canvas.height=Math.round(cssH*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    render();
   }
-
-  function clamp(x){return x<0?0:x>1?1:x;}
-  function lerp(a,b,t){return a+(b-a)*t;}
-  function mix(a,b,t){return 'rgb('+Math.round(lerp(a[0],b[0],t))+','+Math.round(lerp(a[1],b[1],t))+','+Math.round(lerp(a[2],b[2],t))+')';}
-  var GREEN=[15,46,52],YELLOW=[254,230,45];
-
-  gsap.set(sun,{scale:0.7,autoAlpha:0});
-  gsap.set(cube,{scale:0.3,autoAlpha:0,yPercent:-14});
-  gsap.set(jar,{autoAlpha:0,yPercent:34});
-  gsap.set(jarSmoothie,{autoAlpha:0});
-
-  /* p in [0,1] over the section scroll: sun -> cube -> drop -> blend */
-  function frame(p){
-    var sunIn=clamp(p/0.14), sunOut=clamp((p-0.28)/0.16);
-    gsap.set(sun,{autoAlpha:sunIn*(1-sunOut), scale:lerp(0.7,1.08,sunIn)*(1-sunOut*0.85)});
-    var cubeIn=clamp((p-0.30)/0.16), fall=clamp((p-0.58)/0.20), gone=clamp((p-0.74)/0.07), e=fall*fall;
-    gsap.set(cube,{autoAlpha:cubeIn*(1-gone), scale:lerp(0.3,1,cubeIn)*lerp(1,0.46,e), yPercent:lerp(-14,0,cubeIn)+e*64, rotation:e*200});
-    var jarIn=clamp((p-0.52)/0.20);
-    gsap.set(jar,{autoAlpha:jarIn, yPercent:lerp(34,8,jarIn)});
-    var blend=clamp((p-0.80)/0.18);
-    gsap.set(jarFruit,{autoAlpha:1-blend}); gsap.set(jarSmoothie,{autoAlpha:blend});
-    var bg=mix(GREEN,YELLOW,clamp((p-0.6)/0.26));
-    section.style.background=bg; if(sticky){sticky.style.background=bg;}
-    for(var k=0;k<dots.length;k++){var o=dots[k];
-      o.el.style.transform='translate('+(o.dx*o.amp*(0.3+p))+'px,'+(o.dy*o.amp-p*42)+'px)';}
+  function drawContain(img){
+    if(!img||!img.complete||!img.naturalWidth){return false;}
+    ctx.fillStyle=BG;ctx.fillRect(0,0,cssW,cssH);
+    var s=Math.min(cssW/img.naturalWidth,cssH/img.naturalHeight);
+    var w=img.naturalWidth*s,h=img.naturalHeight*s;
+    ctx.drawImage(img,(cssW-w)/2,(cssH-h)/2,w,h);
+    return true;
   }
+  function render(){
+    var idx=Math.max(0,Math.min(COUNT-1,Math.round(cur.f)));
+    if(drawContain(frames[idx]))return;
+    for(var d=1;d<COUNT;d++){ if(drawContain(frames[idx-d]))return; if(drawContain(frames[idx+d]))return; }
+  }
+  function reveal(){ if(ready)return;ready=true;sizeCanvas();canvas.classList.add('ready');if(poster)poster.classList.add('hide'); }
+
+  function loadFrame(i){
+    var img=new Image();img.decoding='async';
+    img.onload=img.onerror=function(){
+      loaded++;
+      if(loadBar)loadBar.style.width=Math.round(loaded/COUNT*100)+'%';
+      if(i===0&&this.naturalWidth)reveal();
+      if(loaded>=COUNT&&loadWrap)loadWrap.classList.add('done');
+    };
+    img.src=url(i+1);frames[i]=img;
+  }
+  loadFrame(0);
+  for(var qi=1;qi<COUNT;qi++)loadFrame(qi);
+  setTimeout(function(){ if(!ready){for(var fi=0;fi<COUNT;fi++){if(frames[fi]&&frames[fi].complete&&frames[fi].naturalWidth){reveal();break;}}} },1200);
+
   function updateCaps(p){
     for(var i=0;i<caps.length;i++){
       var at=parseFloat(caps[i].getAttribute('data-at'));
-      var o=Math.max(0,1-Math.abs(p-at)/0.13); o=o*o*(3-2*o);
-      caps[i].style.opacity=o; caps[i].style.transform='translateY('+((1-o)*24)+'px)';
+      var o=Math.max(0,1-Math.abs(p-at)/0.16);o=o*o*(3-2*o);
+      caps[i].style.opacity=o;caps[i].style.transform='translateY('+((1-o)*24)+'px)';
     }
   }
 
-  if(reduce){ frame(0.9); updateCaps(0.93); return; }
-
   ScrollTrigger.create({
-    trigger:section, start:'top top', end:'bottom bottom', scrub:0.5,
+    trigger:section,start:'top top',end:'bottom bottom',scrub:0.5,
     onUpdate:function(self){
-      frame(self.progress); updateCaps(self.progress);
+      cur.f=self.progress*(COUNT-1);render();updateCaps(self.progress);
       if(hint){ if(self.progress>0.02){hint.classList.add('gone');} else {hint.classList.remove('gone');} }
     }
   });
-  frame(0); updateCaps(0);
-  window.addEventListener('load',function(){ ScrollTrigger.refresh(); });
-  setTimeout(function(){ ScrollTrigger.refresh(); },400);
+  window.addEventListener('resize',function(){dpr=Math.min(window.devicePixelRatio||1,2);sizeCanvas();},{passive:true});
+  sizeCanvas();
+  window.addEventListener('load',function(){sizeCanvas();ScrollTrigger.refresh();});
+  setTimeout(function(){ScrollTrigger.refresh();},400);
 })();
 </script>
 </body>
